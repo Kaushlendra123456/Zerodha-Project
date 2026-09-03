@@ -54,13 +54,13 @@ app.use(bodyParser.json());
 //       isLoss: true,
 //     },
 //     {
-//       name: "ITC",
-//       qty: 5,
-//       avg: 202.0,
-//       price: 207.9,
-//       net: "+2.92%",
-//       day: "+0.80%",
-//     },
+//   name: "ITC",
+//   qty: 5,
+//   avg: 202.0,
+//   price: 207.9,
+//   net: "+2.92%",
+//   day: "+0.80%",
+// },
 //     {
 //       name: "KPITTECH",
 //       qty: 5,
@@ -213,5 +213,61 @@ app.post("/newOrder", async (req, res) => {
 app.listen(PORT, () => {
   console.log("App started!");
   mongoose.connect(uri);
+  mongoose.connect(uri)
+    .then(() => console.log("ACTUALLY CONNECTED ✅"))
+    .catch(() => console.log("ACTUALLY FAILED ❌"));
   console.log("DB started!");
 });
+
+/*require("dotenv").config();
+const dns = require("dns");
+dns.setDefaultResultOrder("ipv4first"); // ← यह सबसे ऊपर
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
+const { HoldingsModel } = require("./model/HoldingsModel");
+const { PositionsModel } = require("./model/PositionsModel");
+const { OrdersModel } = require("./model/OrdersModel");
+
+const PORT = process.env.PORT || 3002;
+const uri = process.env.MONGO_URL; // ✅ .env से match करना चाहिए
+
+const app = express();
+
+app.use(cors());
+app.use(bodyParser.json());
+
+app.get("/allHoldings", async (req, res) => {
+  let allHoldings = await HoldingsModel.find({});
+  res.json(allHoldings);
+});
+
+app.get("/allPositions", async (req, res) => {
+  let allPositions = await PositionsModel.find({});
+  res.json(allPositions);
+});
+
+app.post("/newOrder", async (req, res) => {
+  let newOrder = new OrdersModel({
+    name: req.body.name,
+    qty: req.body.qty,
+    price: req.body.price,
+    mode: req.body.mode,
+  });
+  newOrder.save();
+  res.send("Order saved!");
+});
+
+// ✅ पहले DB, फिर Server
+mongoose.connect(uri)
+  .then(() => {
+    console.log("DB started!");
+    app.listen(PORT, () => {
+      console.log("App started on port", PORT);
+    });
+  })
+  .catch((err) => console.log("DB Error:", err));
+
+*/
